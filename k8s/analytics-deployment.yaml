@@ -1,0 +1,37 @@
+# deployment: Wer soll laufen
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: analytics
+  template:
+    metadata:
+      labels:
+        app: analytics
+    spec:
+      containers:
+      - name: python-api
+        image: analytics-service:v2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 6001
+---
+# Service: Wie soll der Dienst erreichbar sein
+# Service ist wie ein interner Load Balancer im Cluster. Er verteilt die Anfragen an die Pods.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: analytics-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: analytics
+  ports:
+  - protocol: TCP
+    port: 6002
+    targetPort: 6000

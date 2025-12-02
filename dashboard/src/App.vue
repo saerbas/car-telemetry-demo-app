@@ -9,9 +9,6 @@ let intervalId: number;
 onMounted(() => {
   // fetch data immediately and then start interval
   store.fetchTelemetryData();
-  intervalId = window.setInterval(() => {
-    store.fetchTelemetryData();
-  }, 5000); // fetch every 5 seconds
 });
 
 onUnmounted(() => {

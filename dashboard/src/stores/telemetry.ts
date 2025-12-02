@@ -33,7 +33,7 @@ export const useTelemetryStore = defineStore('telemetry', () => {
                 timestamp: new Date().toISOString()
             };
 
-            const response = await axios.post("http://0.0.0.0:6001/analyze", [mockData]);
+            const response = await axios.post("http://0.0.0.0:6002/analyze", [mockData]);
             const analyzedData: TelemetryData = response.data;
             console.log("Analyzed Data:", analyzedData);
 
